@@ -59,7 +59,7 @@ function godir ()
 		pathname=${lines[0]}
 	fi
 
-	[[ "$2" != "e" ]] && \cd $T/$pathname || (cd $T; $EDITOR -p $pathname)
+	[[ "$2" != "e" ]] && \cd $T/$pathname || (\cd $T; $EDITOR -p $pathname)
 }
 
 function gofile () { godir "$1" e; }
