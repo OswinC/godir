@@ -1,7 +1,18 @@
+function update_godir_filelist ()
+{
+	if [[ -z "$T" ]]; then
+		echo "Please set up the environment variable T"
+		return
+	fi
+	echo -n "Creating index..."
+	(\cd $T; rm -f .filelist; find . -wholename ./release -prune -o -wholename ./.svn -prune -o -wholename *.git -prune -o -type f -print -o -type d -printf "%p/\n" > .filelist)
+	echo " Done"
+}
+
 function godir ()
 {
 	if [[ -z "$T" ]]; then
-		echo "Please source a devel file"
+		echo "Please set up the environment variable T"
 		return
 	fi
 	if [[ -z "$1" ]]; then
@@ -10,9 +21,7 @@ function godir ()
 		return
 	fi
 	if [[ ! -f $T/.filelist ]]; then
-		echo -n "Creating index..."
-		(\cd $T; find . -wholename ./release -prune -o -wholename ./.svn -prune -o -wholename *.git -prune -o -type f -print -o -type d -printf "%p/\n" > .filelist)
-		echo " Done"
+		update_godir_filelist
 		echo ""
 	fi
 	local lines
