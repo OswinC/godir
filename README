@@ -1,0 +1,76 @@
+Here you can find godir(), gofile(), and godir-completion.sh to help you easily
+reach any directory or file under a certain project tree.
+
+The godir() is modified from the one in Android Open Source Project, AOSP/build/envsetup.sh.
+
+The functionality of gofile is patched by Kent Cheng (chenkaie.)
+
+godir-completion.sh can give them even more magic to find a folder or file, as demonstrated following:
+
+oswin.chou@rd1-3:~$ source godir/godir.sh
+oswin.chou@rd1-3:~$ source godir/godir-completion.sh
+oswin.chou@rd1-3:~$ cd fdhijack/
+oswin.chou@rd1-3:~/fdhijack$ tree
+.
+├── app
+│   ├── chfd
+│   │   ├── config.mk
+│   │   ├── makefile
+│   │   └── src
+│   │       └── chfd.c
+│   └── xchfd
+│       └── xchfd.c
+├── config.mk
+├── fdhj_2.6.18
+│   ├── fdhj.c
+│   └── Makefile
+├── fdhj_2.6.28
+│   ├── fdhj.c
+│   └── Makefile
+├── fdhj_2.6.34
+│   ├── fdhj.c
+│   └── Makefile
+├── fdhj_2.6.37
+│   ├── fdhj.c
+│   └── Makefile
+├── fdhj_3.10.49
+│   ├── fdhj.c
+│   └── Makefile
+├── inc
+│   ├── ceh.h
+│   ├── fdhj.h
+│   └── libfdhj.h
+├── makefile
+├── README
+├── scr
+│   └── fdhj_load
+└── src
+    ├── ceh.c
+	    └── libfdhj.c
+
+12 directories, 23 files
+oswin.chou@rd1-3:~/fdhijack$ export T=$PWD
+oswin.chou@rd1-3:~/fdhijack$ update_godir_filelist
+Creating index... Done
+
+oswin.chou@rd1-3:~/fdhijack$ cd fdhj_2.6.18 # To show that every path can be found regardless of where you are
+oswin.chou@rd1-3:~/fdhijack/fdhj_2.6.18$ godir ch[TAB]
+oswin.chou@rd1-3:~/fdhijack/fdhj_2.6.18$ godir chfd/[TAB][TAB]
+chfd/           chfd/config.mk  chfd/makefile   chfd/src/
+oswin.chou@rd1-3:~/fdhijack/fdhj_2.6.18$ godir chfd/s[TAB]
+oswin.chou@rd1-3:~/fdhijack/fdhj_2.6.18$ godir chfd/src/$[Enter]
+oswin.chou@rd1-3:~/fdhijack/app/chfd/src$ pwd
+/home/oswin.chou/fdhijack/app/chfd/src
+oswin.chou@rd1-3:~/fdhijack/app/chfd/src$ gofile fdhj.[TAB][TAB]
+fdhj.c  fdhj.h
+oswin.chou@rd1-3:~/fdhijack/app/chfd/src$ gofile fdhj.c[Enter]
+   [1] ./fdhj_2.6.18/fdhj.c
+   [2] ./fdhj_2.6.28/fdhj.c
+   [3] ./fdhj_2.6.34/fdhj.c
+   [4] ./fdhj_2.6.37/fdhj.c
+   [5] ./fdhj_3.10.49/fdhj.c
+   [6] ./src/libfdhj.c
+
+Select one ([a] -> all): 5[Enter]
+(./fdhj_3.10.49/fdhj.c is then opened in $EDITOR)
+
